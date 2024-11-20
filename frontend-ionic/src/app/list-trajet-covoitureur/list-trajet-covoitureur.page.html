@@ -1,0 +1,232 @@
+<meta name="mobile-web-app-capable" content="yes">
+
+
+<ion-content>
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="mes-trajets">
+        <ion-icon name="car"></ion-icon>
+        <ion-label>My rides</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="reservation">
+        <ion-icon name="calendar"></ion-icon>
+        <ion-label>Reservations</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="profile" (click)="openMenu()">
+        <ion-icon name="person-circle"></ion-icon>
+        <ion-label>Profile</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+
+    <!-- Mes Trajets Tab -->
+    <ion-tab tab="mes-trajets">
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>My rides</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="navigateToAddTrajetPage()" fill="clear">
+              <ion-icon slot="icon-only" name="add-circle-outline" color="light"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list *ngIf="trajets && trajets.length > 0; else noTrajetsMessage" class="trajet-list">
+          <ion-item *ngFor="let trajet of trajets" class="trajet-item" lines="full">
+            <ion-label>
+              <h2>From {{ trajet.from }} to {{ trajet.to }}</h2>
+              <p>Departure: {{ trajet.depart }}h</p>
+              <p>Date: {{ trajet.datedapart | date: 'yyyy-MM-dd' }}</p>
+              <p>Available places: {{ trajet.placedisponible }}</p>
+              <p>price: <strong>{{ trajet.cout }} DT</strong></p>
+            </ion-label>
+            <ion-button slot="end" color="danger" (click)="deleteTrajet(trajet)">
+              <ion-icon slot="start" name="trash-outline"></ion-icon>
+              Delete
+            </ion-button>
+            <ion-button slot="end" color="success" (click)="editTrajet(trajet)">
+              <ion-icon slot="start" name="create-outline"></ion-icon>
+              Update
+            </ion-button>
+          </ion-item>
+        </ion-list>
+        <ng-template #noTrajetsMessage>
+          <div class="no-rides-message">
+            <ion-label>No rides available.</ion-label>
+          </div>
+        </ng-template>
+        
+      </ion-content>
+      
+    </ion-tab>
+    
+
+    <!-- Reservations Tab -->
+    <ion-tab tab="reservation">
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Reservations</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+         
+            <ion-list *ngIf="reservations && reservations.length > 0; else noReservationsMessage"class="reservation-list">
+              <ion-item class="reservation-item" *ngFor="let reservation of reservations">
+                <ion-label>
+                  <h2>From: {{ reservation.trajet.from }} to {{ reservation.trajet.to }}</h2>
+                  <p>Date: {{ reservation.date | date: 'yyyy-MM-dd' }}</p>
+                  <p>Passenger: {{ reservation.passager.name }} {{ reservation.passager.lastname }}</p>
+                  <p>Email: {{ reservation.passager.email }}</p>
+                  <p>Phone: {{ reservation.passager.phone }}</p>
+                </ion-label>
+                <ion-button 
+                  slot="end"
+                  color="success"
+                  [disabled]="reservation.confirmed || reservation.cancelled"
+                  (click)="confirmReservation(reservation._id)">
+                  <ion-icon slot="start" name="checkmark-circle"></ion-icon>
+                  Approve
+                </ion-button>
+                <ion-button 
+                  slot="end"
+                  color="danger"
+                  [disabled]="reservation.confirmed || reservation.cancelled"
+                  (click)="cancelReservation(reservation._id)">
+                  <ion-icon slot="start" name="close-circle"></ion-icon>
+                  Reject
+                </ion-button>
+              </ion-item>
+            </ion-list>
+         
+          <ng-template #noReservationsMessage>
+            <div class="no-reservations">
+              <p>No reservations available.</p>
+            </div>
+          </ng-template>
+        
+      </ion-content>
+      
+    </ion-tab>
+
+    <!-- Profile Tab -->
+  <!-- <ion-tab tab="profile">
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Profile</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="logout()" color="light">
+              <ion-icon name="log-out-outline" slot="start"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+    
+      <ion-content>
+        <div class="profile-content">
+          <h2 style="margin-left: 10px;">Profile</h2>
+    
+           Profile Info Fields 
+          <ion-item>
+            <ion-label position="floating">Nom</ion-label>
+            <ion-input [(ngModel)]="userProfile.name"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Prénom</ion-label>
+            <ion-input [(ngModel)]="userProfile.lastname"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Email</ion-label>
+            <ion-input [(ngModel)]="userProfile.email"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Téléphone</ion-label>
+            <ion-input [(ngModel)]="userProfile.phone" type="tel"></ion-input>
+          </ion-item>
+    
+          
+          <ion-button 
+            expand="block" 
+            style="margin: 20px auto; --background: #ff5722; width: 60%;" 
+            (click)="updateUserProfile()">
+            Save Profile
+          </ion-button>
+    
+         
+          <ion-button 
+            expand="block" 
+            fill="outline" 
+            style="margin: 10px auto; width: 60%;" 
+            (click)="toggleChangePassword()">
+            Change Password
+          </ion-button>
+    
+          <div *ngIf="showChangePassword" style="margin-top: 20px;">
+            <ion-item>
+              <ion-label position="floating">Old Password</ion-label>
+              <ion-input [(ngModel)]="oldPassword" type="password"></ion-input>
+            </ion-item>
+    
+            <ion-item>
+              <ion-label position="floating">New Password</ion-label>
+              <ion-input [(ngModel)]="newPassword" type="password"></ion-input>
+            </ion-item>
+    
+            <ion-item>
+              <ion-label position="floating">Confirm New Password</ion-label>
+              <ion-input [(ngModel)]="confirmNewPassword" type="password"></ion-input>
+            </ion-item>
+    
+            <ion-button 
+              expand="block" 
+              style="margin: 20px auto; --background: #ff5722; width: 60%;" 
+              (click)="saveNewPassword()">
+              Save New Password
+            </ion-button>
+          </div>
+    
+        </div>
+      </ion-content>
+    </ion-tab> 
+     -->
+     <ion-tab tab="profile" id="">
+      <ion-menu content-id="main-content" side="end" menu-id="main-menu">
+        <!-- Menu Header -->
+        <ion-header>
+          <ion-toolbar class="menu-header" style="--background: white;">
+            <ion-avatar slot="start">
+              <ion-icon name="person-circle" size="large" style="color: black;"></ion-icon>
+            </ion-avatar>
+            <ion-label>
+              <h2 style="color: black;">{{ name }} {{ lastName }}</h2>
+              <p>Welcome back!</p>
+            </ion-label>
+          </ion-toolbar>
+        </ion-header>
+      
+        <!-- Menu Content -->
+        <ion-content>
+          <ion-list class="menu-list">
+            
+            <ion-item button [routerLink]="['/changepwd-passager' , userId]">
+              <ion-icon slot="start" name="settings" color="custom-color"></ion-icon>
+              <ion-label>Settings</ion-label>
+            </ion-item>
+            <ion-item button [routerLink]="['/profile-passager', userId]">
+              <ion-icon slot="start" name="person" color="custom-color"></ion-icon>
+              <ion-label>Profile</ion-label>
+            </ion-item>
+            <ion-item button (click)="logout()">
+              <ion-icon slot="start" name="log-out"></ion-icon>
+              <ion-label>Logout</ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-content>
+      </ion-menu>    </ion-tab>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+
+    
+  </ion-tabs>
+</ion-content>
+

@@ -1,0 +1,119 @@
+.header-banner {
+  background-color: #e64a19;
+  padding: 15px;
+  text-align: center;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  height: 200px;
+}
+
+.header-banner img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.add-button-container {
+  margin: 15px 10px;
+}
+
+.add-button {
+  margin: 15px 0;
+  border-radius: 10px;
+  --background: #e64a19;
+}
+
+.trajet-list {
+  padding: 10px;
+}
+
+.trajet-item {
+  margin-bottom: 10px;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #ffffff;
+}
+
+.trajet-item h2 {
+  color: #e64a19;
+  font-weight: bold;
+}
+
+.trajet-item p {
+  margin: 5px 0;
+  font-size: 0.9em;
+}
+
+.trajet-item ion-button {
+  --background: #e64a19;
+  border-radius: 10px;
+  color: #ffffff;
+}
+
+.no-trajets {
+  text-align: center;
+  margin: 20px 0;
+  color: #9e9e9e;
+  font-size: 1.2em;
+}
+
+
+/* Custom styles for the side menu */
+ion-menu {
+  --background: #f4f4f4;  /* Light background for the menu */
+}
+
+.menu-header {
+  background-color: #ff5722;  /* Deep orange header background */
+  color: white;  /* White text for the header */
+  padding: 16px;
+}
+
+ion-avatar {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+ion-label h2 {
+  font-size: 18px;
+  font-weight: bold;
+  color: black;
+}
+
+ion-label p {
+  font-size: 14px;
+  color: black;
+}
+
+/* Customize menu item style */
+.menu-list ion-item {
+  --background: transparent;
+  --ripple-color: #ff5722;  /* Deep orange ripple effect */
+  --border-width: 0;
+  margin-bottom: 10px;
+}
+
+/* Menu items hover effect */
+.menu-list ion-item:hover {
+  --background: #e0e0e0;
+}
+
+/* Apply custom color to icons */
+ion-icon {
+  font-size: 24px;
+  color: black;  /* Custom deep orange color for icons */
+}
+
+ion-item:hover ion-icon {
+  color: #e64a19;  /* Darker orange on hover */
+}
+
+// /* Apply custom color to menu items */
+ion-item ion-label {
+  color: black;  /* Default label text color */
+}
+
+ion-item:hover ion-label {
+  color: #ff5722;  /* Deep orange label color on hover */
+}

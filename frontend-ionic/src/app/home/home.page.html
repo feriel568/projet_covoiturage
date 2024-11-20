@@ -1,0 +1,49 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      CovoitExpress
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="home-content">
+  <div class="header-section">
+    <img src="../../assets/background.jpg" alt="Background Image" class="background-image" />
+    <div class="overlay">
+      <h1>Bienvenue à notre application de covoiturage</h1>
+      <p>Voyagez ensemble, économisez plus.</p>
+      <ion-button [routerLink]="['/login']">Lancez-vous</ion-button>
+    </div>
+  </div>
+
+  <section class="services-section">
+    <h2>Nos Services</h2>
+    <div class="services">
+      <div class="service-card">
+        <ion-icon name="car-outline"></ion-icon>
+        <h3>Covoiturage rapide</h3>
+        <p>Facilitez vos trajets quotidiens avec notre service de covoiturage rapide.</p>
+      </div>
+      <div class="service-card">
+        <ion-icon name="person-add-outline"></ion-icon>
+        <h3>Ajouter des conducteurs</h3>
+        <p>Trouvez des conducteurs vérifiés et partagez vos trajets en toute sécurité.</p>
+      </div>
+      <div class="service-card">
+        <ion-icon name="pricetag-outline"></ion-icon>
+        <h3>Coûts partagés</h3>
+        <p>Réduisez vos frais de transport en partageant les coûts avec d'autres passagers.</p>
+      </div>
+    </div>
+  </section>
+
+  <ion-footer class="footer-section">
+    <div class="footer-content">
+      <p>&copy; 2024 CovoitExpress</p>
+      <a [routerLink]="['/contact']" class="account-message">
+        Contactez-nous
+      </a>
+    </div>
+  </ion-footer>
+  
+</ion-content>

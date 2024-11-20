@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-toolbar style="--background: #e64a19; color: #f2f2f7;">
+    <ion-title>Carpoolers</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button style="color: #f2f2f7;"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+
+  <form (ngSubmit)="submitReview()">
+    <ion-item>
+      <ion-label><strong>Carpooler: {{ covoitureur?.name }} {{ covoitureur?.lastname }}</strong></ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label >Rating</ion-label>
+      <div class="stars">
+        <ion-icon *ngFor="let star of stars; let i = index" 
+                  [name]="i < rating ? 'star' : 'star-outline'" 
+                  (click)="setRating(i + 1)">
+        </ion-icon>
+      </div>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Review</ion-label>
+      <ion-input [(ngModel)]="reviewContent" name="reviewContent"></ion-input>
+    </ion-item>
+
+    <ion-button style="--background: #e64a19; color: #f2f2f7; height: 40px; width: 200px; margin-top: 10px; margin-left: 80px;"  type="submit">Submit</ion-button>
+  </form>
+
+  <div class="carousel">
+    <div *ngIf="displayedReviews.length === 0" class="no-reviews-message">
+      <p>No reviews available.</p>
+    </div>
+    <div class="carousel-item" *ngFor="let review of displayedReviews; let i = index" [class.active]="i === currentIndex">
+      
+      <div style="display: inline-flex; align-items: center;">
+        <ion-icon name="person-circle-outline" style="font-size: 24px; margin-right: 8px;"></ion-icon>
+        <h3 style="font-size: 16px; margin: 0;">{{ review.auteur.name }} {{ review.auteur.lastname }}</h3>
+      </div>
+      
+      
+      <p>{{ review.contenue }}</p>
+      <p>
+        <strong>Rating: 
+          <span class="selected-stars">
+            <!-- Display the selected stars -->
+            <ng-container *ngFor="let star of starsArray('selected', review.note)">
+              &#9733; <!-- Filled star (solid) -->
+            </ng-container>
+          </span>
+          <span class="unselected-stars">
+            <!-- Display the unselected stars -->
+            <ng-container *ngFor="let star of starsArray('unselected', review.note)">
+              &#9734; <!-- Empty star (outline) -->
+            </ng-container>
+          </span>
+        </strong>
+      </p>
+      
+      <p>Posted on: {{ review.datePublication | date }}</p>
+    </div>
+    <div class="carousel-controls">
+      <button (click)="prevSlide()">&#10094;</button>
+      <button (click)="nextSlide()">&#10095;</button>
+    </div>
+  </div>
+  
+  
+
+  <div *ngIf="!carpoolerId">
+    <p>Invalid Carpooler ID</p>
+  </div>
+</ion-content>

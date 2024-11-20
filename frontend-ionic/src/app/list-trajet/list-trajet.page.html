@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-toolbar style="--background: #e64a19; color: #f2f2f7;">
+    <ion-title>Rides</ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button style="color: #f2f2f7;"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content id="main-content" [fullscreen]="true" class="ion-padding" style="--background: #f2f2f7;">
+  <div class="header-banner">
+    <img src="assets/header-image.png" alt="Header Image" />
+  </div>
+
+  <ion-searchbar placeholder="Search a ride" animated (ionInput)="filterTrajets($event)"></ion-searchbar>
+
+  <ion-list class="trajet-list">
+    <ion-item *ngFor="let trajet of filteredTrajets" lines="full" [routerLink]="['/add-delete-reservation', trajet._id]" class="trajet-item">
+      <ion-avatar slot="start">
+        <ion-icon name="person-circle" size="large"></ion-icon>
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ trajet.place }} </h2>
+        <ion-text color="medium">
+          <p>From {{trajet.from}} to {{trajet.to}} </p>
+          <p>Departure: {{ trajet.depart }}h</p>
+          <p>Date: {{ trajet.datedapart | date: 'dd/MM/yyyy' }}</p>
+
+          <!-- <p>Places disponibles: {{ trajet.placedisponible }}</p> -->
+          <p>Price: <strong>{{ trajet.cout }} TND</strong></p>
+        </ion-text>
+      </ion-label>
+      <ion-button slot="end" size="small" style="--background: #e64a19; --color: #ffffff;">
+        Book
+      </ion-button>
+      
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-menu content-id="main-content" side="end" menu-id="main-menu">
+  <!-- Menu Header -->
+  <ion-header>
+    <ion-toolbar class="menu-header">
+      <ion-avatar slot="start">
+        <ion-icon name="person-circle" size="large"></ion-icon>
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ name }} {{ lastName }}</h2>
+        <p>Welcome back!</p>
+      </ion-label>
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- Menu Content -->
+  <ion-content>
+    <ion-list class="menu-list">
+      <ion-item button [routerLink]="['/reservations-passager' , userId]">
+        <ion-icon slot="start" name="book" color="custom-color"></ion-icon>
+        <ion-label>My reservations</ion-label>
+      </ion-item>
+      <ion-item button [routerLink]="['/changepwd-passager' , userId]">
+        <ion-icon slot="start" name="settings" color="custom-color"></ion-icon>
+        <ion-label>Settings</ion-label>
+      </ion-item>
+      <ion-item button [routerLink]="['/profile-passager', userId]">
+        <ion-icon slot="start" name="person" color="custom-color"></ion-icon>
+        <ion-label>Profile</ion-label>
+      </ion-item>
+      <ion-item button [routerLink]="['/list-covoitureurs']">
+        <ion-icon slot="start" name="car" color="custom-color"></ion-icon>
+        <ion-label>Carpoolers</ion-label>
+      </ion-item>
+      <ion-item button (click)="logout()">
+        <ion-icon slot="start" name="log-out"></ion-icon>
+        <ion-label>Logout</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
