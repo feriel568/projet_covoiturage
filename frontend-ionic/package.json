@@ -4,12 +4,7 @@
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "lint": "ng lint"
+    "ionic:serve": "ionic serve --host=0.0.0.0 --port=8100 --project=app"
   },
   "private": true,
   "dependencies": {
